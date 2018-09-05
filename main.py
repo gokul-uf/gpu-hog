@@ -6,13 +6,15 @@ from parser import parser
 if __name__ == "__main__":
     opt = parser.parse_args()
 
-    # get job file list from --job_file
-    # get number of GPUs from --gpu_ids
-
     gpus = [int(gpu_id) for gpu_id in opt.gpus.split(",")]
     job_file = opt.job_file
 
     # spawn num_gpu worker threads that will handle job assignment
     # and monitoring to each gpu. 1 producer, N consumers
-    print(gpus)
-    print(job_file)
+    
+    with open(job_file) as f:
+        for job_id, job in enumerate(f):
+            print(f"{job_id}, {job.strip()}")
+
+    # print(gpus)
+    # print(job_file)
