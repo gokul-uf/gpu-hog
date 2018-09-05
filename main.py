@@ -1,22 +1,45 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
+from worker import Worker
 from parser import parser
 
-# TODO add parser arguments
+from multiprocessing import Queue, Lock
+import datetime
 
 if __name__ == "__main__":
     opt = parser.parse_args()
 
     gpus = [int(gpu_id) for gpu_id in opt.gpus.split(",")]
     job_file = opt.job_file
+    queue = Queue()
+    console_lock = Lock()  # for printing to STDOUT
 
     # spawn num_gpu worker threads that will handle job assignment
     # and monitoring to each gpu. 1 producer, N consumers
-    
+    workers = []
+
+    # Start the workers
+    for gpu in gpus:
+        w = Worker(gpu, queue, console_lock)
+        # we don't want the main to exit before all workers are done
+        w.daemon = False
+        w.start()
+        workers.append(w)
+
+    start_time = datetime.datetime.now()
+    with console_lock:
+        print(f"(MAIN): Starting at {start_time}")
+
     with open(job_file) as f:
         for job_id, job in enumerate(f):
-            print(f"{job_id}, {job.strip()}")
+            queue.put((job_id, job.strip()))
 
-    # print(gpus)
-    # print(job_file)
+    # join here to be extra sure
+    for w in workers:
+        w.join()
+
+    end_time = datetime.datetime.now()
+    with console_lock:
+        print(f"(MAIN): All jobs completed at {end_time}")
+        print(f"(MAIN): Lapsed Time: {end_time - start_time}")
