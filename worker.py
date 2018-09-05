@@ -1,5 +1,5 @@
 from __future__ import print_function
-from multithreading import Process
+from multiprocessing import Process
 import time
 
 
