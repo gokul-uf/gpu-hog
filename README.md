@@ -14,4 +14,9 @@ Currently, we support only static number of GPUs
 
 
 
+## Format of Job File
+1. A job is a bash command or `&&` separated sequence of commands to be executed
+2. Specify one job per line
+3. Lines starting with `#` and empty lines are ignored
+
 

@@ -31,9 +31,16 @@ if __name__ == "__main__":
     with console_lock:
         print(f"(MAIN): Starting at {start_time}")
 
+    job_counter = 0
     with open(job_file) as f:
-        for job_id, job in enumerate(f):
-            queue.put((job_id, job.strip()))
+        for line in f:
+            line = line.strip()
+            # ignore comments and empty lines
+            if line.startswith("#") or len(line) == 0:
+                continue
+
+            queue.put((job_counter, line))
+            job_counter += 1
 
     # join here to be extra sure
     for w in workers:
@@ -41,5 +48,5 @@ if __name__ == "__main__":
 
     end_time = datetime.datetime.now()
     with console_lock:
-        print(f"(MAIN): All jobs completed at {end_time}")
+        print(f"(MAIN): {job_counter+1} jobs completed at {end_time}")
         print(f"(MAIN): Lapsed Time: {end_time - start_time}")
