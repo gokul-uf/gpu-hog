@@ -7,7 +7,7 @@ One command per line and feeds into a queue.
 There are n consumer processes, one per GPU which read from the queue and run the command
 on the corresponding GPU.
 
-For each job, the STDOUT and STDERR outputs are stored in a folder with the job_id.
+For each job, the `STDOUT` and `STDERR` outputs are stored in a folder with the `job_id`.
 
 
 Currently, we support only static number of GPUs
