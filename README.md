@@ -28,7 +28,8 @@ See `parser.py` or `hog --help` for more information on the flags available
 2. Specify one job per line
 3. Lines starting with `#` and empty lines are ignored
 
-# TODOs
+## TODOs
 1. Incorporate using `hog` as a decorator to make it more
 2. Allow users to override default task to be done for each job
 3. Use `multiprocessing.logging` instead of `print` statements
+4. Allow changing GPUs available at runtime through a `gpu_file` argument
