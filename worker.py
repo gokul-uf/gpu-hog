@@ -1,17 +1,28 @@
 from __future__ import print_function
 from multiprocessing import Process
 from queue import Empty
-import time
+from job import job
 
 
 class Worker(Process):
 
-    def __init__(self, gpu_id, queue, lock, timeout=5):
+    def __init__(self,
+                 gpu_id,
+                 queue,
+                 lock,
+                 prefix,
+                 output_dir,
+                 timeout=5,
+                 job_method=job):
         super(Worker, self).__init__()
         self.gpu_id = gpu_id
         self.queue = queue
         self.lock = lock
         self.timeout = timeout
+
+        self.job_method = job_method
+        self.prefix = prefix
+        self.output_dir = output_dir
 
     def run(self):
         with self.lock:
@@ -27,8 +38,8 @@ class Worker(Process):
             with self.lock:
                 print(f"(GPU {self.gpu_id}): running {job}")
 
-            # TODO run the job here
-            time.sleep(2)  # sleep for now
+            job_name = self.prefix + str(job_id)
+            job(job_name, job, self.output_dir, self.gpu_id)
 
             with self.lock:
                 print(f"job {job_id} completed")
