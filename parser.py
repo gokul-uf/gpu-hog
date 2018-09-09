@@ -1,6 +1,8 @@
 import argparse
 
-parser = argparse.ArgumentParser(description="hog them GPUs")
+parser = argparse.ArgumentParser(description='''Hog them GPUs!
+        Run many jobs on mulitple jobs programmatically.
+        No root access required!''')
 parser.add_argument("--job_file", help="File to read jobs from", type=str)
 parser.add_argument(
     "--gpus", help="comma separated IDs of the GPUs to use", type=str)
