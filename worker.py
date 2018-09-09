@@ -23,8 +23,7 @@ class Worker(Process):
         self.prefix = prefix
         self.output_dir = output_dir
 
-        assert callable(
-            self.job_method), "job_method argument must be a callable"
+        assert callable(job_method), "job_method argument must be a callable"
         self.job_method = job_method
 
     def run(self):
@@ -42,7 +41,7 @@ class Worker(Process):
                 print(f"(GPU {self.gpu_id}): running {job}")
 
             job_name = self.prefix + str(job_id)
-            job(job_name, job, self.output_dir, self.gpu_id)
+            self.job_method(job_name, job, self.output_dir, self.gpu_id)
 
             with self.lock:
                 print(f"job {job_id} completed")
