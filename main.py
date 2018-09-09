@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # Start the workers
     for gpu in gpus:
-        w = Worker(gpu, queue, console_lock)
+        w = Worker(gpu, queue, console_lock, opt.prefix, opt.output_dir)
         # we don't want the main to exit before all workers are done
         w.daemon = False
         w.start()
