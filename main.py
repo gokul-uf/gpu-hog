@@ -6,6 +6,7 @@ from parser import parser
 
 from multiprocessing import Queue, Lock
 import datetime
+import os
 
 if __name__ == "__main__":
     opt = parser.parse_args()
@@ -18,6 +19,10 @@ if __name__ == "__main__":
     # spawn num_gpu worker threads that will handle job assignment
     # and monitoring to each gpu. 1 producer, N consumers
     workers = []
+
+    # create the output dir
+    if not os.path.exists(opt.output_dir):
+        os.mkdir(opt.output_dir)
 
     # Start the workers
     for gpu in gpus:
