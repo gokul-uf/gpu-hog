@@ -1,11 +1,17 @@
 import argparse
 
-parser = argparse.ArgumentParser(description='''Hog them GPUs!
+parser = argparse.ArgumentParser(
+    description='''Hog them GPUs!
         Run many jobs on mulitple jobs programmatically.
-        No root access required!''')
-parser.add_argument("--job_file", help="File to read jobs from", type=str)
+        No root access required!''',
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
-    "--gpus", help="comma separated IDs of the GPUs to use", type=str)
+    "--job_file", help="File to read jobs from", type=str, required=True)
+parser.add_argument(
+    "--gpus",
+    help="comma separated IDs of the GPUs to use",
+    type=str,
+    required=True)
 parser.add_argument(
     "--prefix",
     help="prefix to attach to each per-job folder name",
