@@ -23,6 +23,10 @@ A basic use case would be
 See `parser.py` or `hog --help` for more information on the flags available
 
 
+## Installation
+Currently, hog is not hosted on PyPI (hopefully will be done soon). 
+Alternative would be to clone this repo, add it to it your `PATH` variable and call from there.
+
 ## Format of Job File
 1. A job is a bash command or `&&` separated sequence of commands to be executed
 2. Specify one job per line
