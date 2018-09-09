@@ -20,9 +20,12 @@ class Worker(Process):
         self.lock = lock
         self.timeout = timeout
 
-        self.job_method = job_method
         self.prefix = prefix
         self.output_dir = output_dir
+
+        assert callable(
+            self.job_method), "job_method argument must be a callable"
+        self.job_method = job_method
 
     def run(self):
         with self.lock:
