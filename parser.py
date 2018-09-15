@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(
 input_group = parser.add_mutually_exclusive_group(required=True)
 input_group.add_argument("--job_file", help="File to read jobs from", type=str)
 input_group.add_argument(
-    "--job_method", help="Yielder method to get jobs from", type=str)
+    "--job_yielder", help="Yielder method to get jobs from", type=str)
 
 parser.add_argument(
     "--gpus",

@@ -15,7 +15,7 @@ def get_jobs(opt):
                     continue
                 yield line
     else:  # we have job generator
-        directory, module_name = os.path.split(opt.job_method)
+        directory, module_name = os.path.split(opt.job_yielder)
         module_name = os.path.splitext(module_name)[0]
 
         sys.path.insert(0, directory)
@@ -24,7 +24,7 @@ def get_jobs(opt):
             module.yielder  # testing if yielder method exists
         except ImportError:
             raise ImportError(
-                f"Can't import {opt.job_method}, ensure it exists",
+                f"Can't import {opt.job_yielder}, ensure it exists",
                 " and has a method named 'yielder'")
 
         yield from module.yielder()
