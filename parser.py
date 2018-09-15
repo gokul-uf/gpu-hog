@@ -5,8 +5,12 @@ parser = argparse.ArgumentParser(
         Run many jobs on mulitple jobs programmatically.
         No root access required!''',
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument(
-    "--job_file", help="File to read jobs from", type=str, required=True)
+
+input_group = parser.add_mutually_exclusive_group(required=True)
+input_group.add_argument("--job_file", help="File to read jobs from", type=str)
+input_group.add_argument(
+    "--job_method", help="Yielder method to get jobs from", type=str)
+
 parser.add_argument(
     "--gpus",
     help="comma separated IDs of the GPUs to use",
