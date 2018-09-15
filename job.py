@@ -27,6 +27,9 @@ def job(job_name, job_instruction, output_dir, gpu_id):
         proc = subprocess.run(instr, stdout=stdout, stderr=stderr, shell=True)
 
     if proc.returncode:
-        open(os.path.join(base_dir, "FAILURE"), 'a').close()
+        filename = os.path.join(base_dir, "FAILURE")
     else:
-        open(os.path.join(base_dir, "SUCCESS"), 'a').close()
+        filename = os.path.join(base_dir, "SUCCESS")
+
+    with open(filename, 'a'):
+        os.utime(filename, None)
