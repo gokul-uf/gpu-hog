@@ -3,6 +3,7 @@ from __future__ import print_function
 
 from worker import Worker
 from parser import parser
+from job_yielder import get_jobs
 
 from multiprocessing import Queue, Lock
 import datetime
@@ -12,7 +13,6 @@ if __name__ == "__main__":
     opt = parser.parse_args()
 
     gpus = [int(gpu_id) for gpu_id in opt.gpus.split(",")]
-    job_file = opt.job_file
     queue = Queue()
     console_lock = Lock()  # for printing to STDOUT
 
@@ -37,15 +37,10 @@ if __name__ == "__main__":
         print(f"(MAIN): Starting at {start_time}")
 
     job_counter = 0
-    with open(job_file) as f:
-        for line in f:
-            line = line.strip()
-            # ignore comments and empty lines
-            if line.startswith("#") or len(line) == 0:
-                continue
 
-            queue.put((job_counter, line))
-            job_counter += 1
+    for job in get_jobs(opt):
+        queue.put((job_counter, job))
+        job_counter += 1
 
     # join here to be extra sure
     for w in workers:
