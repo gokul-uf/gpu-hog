@@ -15,7 +15,9 @@ We currently support running hog as a CLI command
 
 A basic use case would be
 
-`hog --job_file foo.txt --gpus 1,2,3`
+	hog --job_file foo.txt --gpus 1,2,3
+
+This would read jobs from `foo.txt` and run them on GPUs `1`, `2` and `3` concurrently.
 
 See the section on _Format of Job File_ for more information on how to write the job file.
 
@@ -29,19 +31,21 @@ See the section on _Format of Job File_ for more information on how to write the
 ##  User-Defined Job Yielders
  We have the `--job_yielder` flag that allows users to define their method to generate jobs instead of using a `job_file`. To use this, define a method named `yielder` in another file, say `test.py` and call hog as below
 
-	hog --job_yielder test.py (other flags)
+	hog --job_yielder test.py ...other flags
 
 `hog` will now run the `yielder` method from `test.py` to generate the jobs to put into queue.
 
 ## Running Concurrent Jobs on the same GPU
 We do not have restrictions on how many concurrent jobs can run on the same GPU. It is important to note that in some cases it might be better to run only one job at any given point on a GPU. In other cases, for example, running multiple tensorflow instances, it might be possible to run several concurrent sessions on the same GPU. It is up to the user to decide which one is better suited for their use-case.
 
-To run multiple concurrent programs on the same GPU, use multiple instances of the ID while setting the `--gpus` flag. For example, `--gpus 0,0,1,2,2,2` will run two concurrent jobs on GPU `0`, one on GPU `1`, three on GPU `2`
+To run multiple concurrent programs on the same GPU, use multiple instances of the ID while setting the `--gpus` flag. 
+
+For example, `--gpus 0,0,1,2,2,2` will run two concurrent jobs on GPU `0`, one on GPU `1`, three on GPU `2`
 
 ## Format of Output Folder
 Inside `output_dir`, there is one folder per job according to flags passed. Say we have `job_1`, inside we have the following files
 
-* `INFO` has basic information about the job such as job name, command, GPU the command was run on
+* `INFO` basic information about the job such as job name, command, GPU the command was run on
 * `job_0.ERR` captured `STDERR` output of the job
 * `job_0.OUT` captured `STDOUT` output of the job
 * `SUCCESS` / `FAILURE` empty file showing whether the job succeeded or not
