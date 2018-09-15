@@ -39,8 +39,8 @@ if __name__ == "__main__":
     job_counter = 0
 
     for job in get_jobs(opt):
-        queue.put((job_counter, job))
         job_counter += 1
+        queue.put((job_counter, job))
 
     # join here to be extra sure
     for w in workers:
@@ -48,5 +48,5 @@ if __name__ == "__main__":
 
     end_time = datetime.datetime.now()
     with console_lock:
-        print(f"(MAIN): {job_counter+1} jobs completed at {end_time}")
+        print(f"(MAIN): {job_counter} jobs completed at {end_time}")
         print(f"(MAIN): Lapsed Time: {end_time - start_time}")
