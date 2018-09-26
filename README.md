@@ -56,8 +56,9 @@ Inside `output_dir`, there is one folder per job according to flags passed. Say 
 3. Lines starting with `#` and empty lines are ignored
 
 ## TODOs
-1. Incorporate using `hog` as a decorator to make it more
+1. Incorporate using `hog` as a decorator to make it more flexible
 2. Allow users to override default task to be done for each job
-3. Use `multiprocessing.logging` instead of `print` statements
-4. Allow changing GPUs available at runtime through a `gpu_file` argument
-5. Have a test suite
+3. Hooks, both pre-run and post-run (for things like email alerts, logging to a DB .etc)
+4. Use `multiprocessing.logging` instead of `print` statements
+5. Allow changing GPUs available at runtime through a `gpu_file` argument
+6. Have a test suite
